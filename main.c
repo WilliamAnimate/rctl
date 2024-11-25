@@ -40,8 +40,8 @@ char* invoke_rc_update(char* argv[], const char* opstr) {
             break;
         }
     }
-    printf("enable %s\n", argv[2]);
-    printf("%s\n", runlevel_opt);
+    DEBUGPRINT("enable %s\n", argv[2]);
+    DEBUGPRINT("%s\n", runlevel_opt);
 
     char* to_exec = NULL;
     const char* rc_update = "rc-update ";
