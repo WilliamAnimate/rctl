@@ -40,22 +40,23 @@ char* invoke_rc_update(char* argv[], const char* opstr) {
     const char* rc_update = "rc-update ";
     if (runlevel_opt == NULL) {
         int size = strlen(argv[2]) + strlen(rc_update) + strlen(opstr) + 1;
-        char to_exec_i[size];
+        char* to_exec_i = malloc(size);
+
         strcpy(to_exec_i, rc_update);
         strcat(to_exec_i, opstr);
         strcat(to_exec_i, argv[2]);
 
-        to_exec = strdup(to_exec_i);
+        to_exec = to_exec_i;
     } else {
         int size = strlen(runlevel_opt) + strlen(argv[3]) + strlen(opstr) + strlen(rc_update) + 2;
-        char to_exec_i[size];
+        char* to_exec_i = malloc(size);
         strcpy(to_exec_i, rc_update);
         strcat(to_exec_i, opstr);
         strcat(to_exec_i, argv[3]);
         strcat(to_exec_i, " ");
         strcat(to_exec_i, runlevel_opt);
 
-        to_exec = strdup(to_exec_i);
+        to_exec = to_exec_i;
     }
 
     free(runlevel_opt);
