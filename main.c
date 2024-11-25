@@ -13,20 +13,13 @@ char *RUNLEVELS[] = { "default", "boot", "nonetwork", "sysinit", "shutdown" };
 char* invoke_rc_service(char* argv[], const char* opstr) {
     const char* rc_service = "rc-service ";
     int size = strlen(argv[2]) + strlen(opstr) + strlen(rc_service) + 1;
-    char to_exec[size];
+    char* to_exec = malloc(size);
     strcpy(to_exec, rc_service);
     strcat(to_exec, argv[2]);
     strcat(to_exec, " ");
     strcat(to_exec, opstr);
 
-    char* ret = malloc(strlen(to_exec) + 1);
-    if (ret != NULL) {
-        strcpy(ret, to_exec);
-    } else {
-        perror("invoke_rc_service (ret): failed to malloc");
-        abort();
-    }
-    return ret;
+    return to_exec;
 }
 
 char* invoke_rc_update(char* argv[], const char* opstr) {
@@ -65,16 +58,8 @@ char* invoke_rc_update(char* argv[], const char* opstr) {
         to_exec = strdup(to_exec_i);
     }
 
-    char* ret = malloc(strlen(to_exec) + 1);
-    if (ret != NULL) {
-        strcpy(ret, to_exec);
-    } else {
-        perror("invoke_rc_update (ret): failed to malloc");
-        abort();
-    }
     free(runlevel_opt);
-    free(to_exec);
-    return ret;
+    return to_exec;
 }
 
 int main(int argc, char* argv[]) {
@@ -119,21 +104,21 @@ int main(int argc, char* argv[]) {
     char* exec = NULL;
     char* supplementary_exec = NULL;
     if (strcmp(argv[1], "enable") == 0) {
-        exec = strdup(invoke_rc_update(argv, "add "));
+        exec = invoke_rc_update(argv, "add ");
         if (run_supplementary_cmd) {
             DEBUGPRINT("%s\n", "hm");
-            supplementary_exec = strdup(invoke_rc_service(argv, "start"));
+            supplementary_exec = invoke_rc_service(argv, "start");
         }
     } else if (strcmp(argv[1], "disable") == 0) {
-        exec = strdup(invoke_rc_update(argv, "del "));
+        exec = invoke_rc_update(argv, "del ");
         if (run_supplementary_cmd) {
             DEBUGPRINT("%s\n", "hm");
-            supplementary_exec = strdup(invoke_rc_service(argv, "stop"));
+            supplementary_exec = invoke_rc_service(argv, "stop");
         }
     } else if (strcmp(argv[1], "start") == 0) {
-        exec = strdup(invoke_rc_service(argv, "start"));
+        exec = invoke_rc_service(argv, "start");
     } else if (strcmp(argv[1], "stop") == 0) {
-        exec = strdup(invoke_rc_service(argv, "stop"));
+        exec = invoke_rc_service(argv, "stop");
     }
 
     DEBUGPRINT("command to run: %s\n", exec);
