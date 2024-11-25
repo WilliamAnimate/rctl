@@ -84,9 +84,11 @@ int main(int argc, char* argv[]) {
      * rctl stop evremap ............ rc-service evremap stop
      */
 
+#ifdef DEBUG
     for (int i = 0; i < argc; i++) {
         DEBUGPRINT("argv[%i]: %s\n", i, argv[i]);
     }
+#endif
 
     // basic safety
     if (argc < 2) {
