@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
     }
 
     // basic safety
-    if (argc < 3) {
+    if (argc < 2) {
         /* sprintf(STDERR_FILENO, "Not enough options!"); */
         puts("not enough options\n");
         return 1;
@@ -104,22 +104,31 @@ int main(int argc, char* argv[]) {
 
     char* exec = NULL;
     char* supplementary_exec = NULL;
-    if (strcmp(argv[1], "enable") == 0) {
-        exec = invoke_rc_update(argv, "add ");
-        if (run_supplementary_cmd) {
-            DEBUGPRINT("%s\n", "hm");
-            supplementary_exec = invoke_rc_service(argv, "start");
+    if (argc == 2) {
+        if (strcmp(argv[1], "show") == 0) {
+            exec = strdup("rc-update show -v"); // :skull:
+        } else {
+            puts("invalid args");
+            return 1;
         }
-    } else if (strcmp(argv[1], "disable") == 0) {
-        exec = invoke_rc_update(argv, "del ");
-        if (run_supplementary_cmd) {
-            DEBUGPRINT("%s\n", "hm");
-            supplementary_exec = invoke_rc_service(argv, "stop");
+    } else if (argc > 2) {
+        if (strcmp(argv[1], "enable") == 0) {
+            exec = invoke_rc_update(argv, "add ");
+            if (run_supplementary_cmd) {
+                DEBUGPRINT("%s\n", "hm");
+                supplementary_exec = invoke_rc_service(argv, "start");
+            }
+        } else if (strcmp(argv[1], "disable") == 0) {
+            exec = invoke_rc_update(argv, "del ");
+            if (run_supplementary_cmd) {
+                DEBUGPRINT("%s\n", "hm");
+                supplementary_exec = invoke_rc_service(argv, "stop");
+            }
+        } else if (strcmp(argv[1], "start") == 0) {
+            exec = invoke_rc_service(argv, "start");
+        } else if (strcmp(argv[1], "stop") == 0) {
+            exec = invoke_rc_service(argv, "stop");
         }
-    } else if (strcmp(argv[1], "start") == 0) {
-        exec = invoke_rc_service(argv, "start");
-    } else if (strcmp(argv[1], "stop") == 0) {
-        exec = invoke_rc_service(argv, "stop");
     }
 
     DEBUGPRINT("command to run: %s\n", exec);
