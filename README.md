@@ -6,16 +6,18 @@ _cause systemctl is the only good thing in the whole systemd suite_.
 
 ## Wtf?
 
-Yeah. This is a horribly written wrapper to the openrc command line tools, made to be easier for those comfortable with systemctl to approach.
+Yeah. This is a horribly written wrapper to the openrc command line tools, made for those comfortable with systemctl.
 
 ## What's wrong with it??
 
 first, we have rc-update add **evremap**
+
 then, we have rc-service **evremap** start
 
 whereas on systemd...
 
 systemctl enable **evremap**.service
+
 systemctl start **evremap**.service
 
 why are they in different places???
