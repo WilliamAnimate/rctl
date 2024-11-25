@@ -48,3 +48,13 @@ Take this excerpt from the source code:
  */
 ```
 
+## Why is the code so abysmal
+
+heh
+
+## I found a memory corruption bug
+
+![skull_gone](https://cdn.discordapp.com/emojis/1098881040900173895.webp?animated=true)
+
+if it's not a buffer overflow then i don't know what to do.
+
