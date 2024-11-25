@@ -128,6 +128,8 @@ int main(int argc, char* argv[]) {
             exec = invoke_rc_service(argv, "start");
         } else if (strcmp(argv[1], "stop") == 0) {
             exec = invoke_rc_service(argv, "stop");
+        } else if (strcmp(argv[1], "status") == 0) {
+            exec = invoke_rc_service(argv, "status");
         }
     }
 
