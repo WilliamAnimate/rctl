@@ -130,6 +130,8 @@ int main(int argc, char* argv[]) {
             exec = invoke_rc_service(argv, "stop");
         } else if (strcmp(argv[1], "status") == 0) {
             exec = invoke_rc_service(argv, "status");
+        } else if (strcmp(argv[1], "show") == 0 && strcmp(argv[2], "crashed") == 0) {
+            exec = strdup("rc-status -c");
         }
     }
 
