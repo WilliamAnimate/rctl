@@ -4,3 +4,6 @@
 #else
 #define DEBUGPRINT(_fmt, ...)
 #endif // DEBUG
+
+#define SOMETHING_LIKE_SYSTEMD
+/* #define SOMETHING_LIKE_SYSTEMD_ALLOW_POSSIBLE_DATA_LOSS */

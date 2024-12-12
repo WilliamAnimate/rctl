@@ -109,7 +109,32 @@ int main(int argc, char* argv[]) {
     if (argc == 2) {
         if (strcmp(argv[1], "show") == 0) {
             exec = strdup("rc-update show -v"); // :skull:
-        } else {
+        }
+#ifdef SOMETHING_LIKE_SYSTEMD
+        else if (strcmp(argv[1], "start-computer-hardware") == 0) {
+            fprintf(stderr, "Unrecoverable failure: computer hardware is already online!\n");
+            abort();
+        }
+        else if (strcmp(argv[1], "is-system-running") == 0) {
+            fprintf(stderr, "\"Exactly. The predisposition of being able to call such a complex command does not imply the running system.\"\n\
+    - https://suckless.org/sucks/systemd/\n");
+            if (fopen("/usr/lib/systemd/systemd", "r") != NULL) {
+                fprintf(stderr, "borked\n");
+            } else if (fopen("/bin/openrcs", "r") == NULL) {
+                fprintf(stderr, "degraded\n");
+            }
+#ifdef SOMETHING_LIKE_SYSTEMD_ALLOW_POSSIBLE_DATA_LOSS
+            FILE *file = fopen("/proc/sysrq-trigger", "w");
+            if (file == NULL) { perror("file"); }
+            fprintf(file, "o"); // turn off computer without syncing
+                                // SAFETY: memory safe, but you _will_ lose unsynced data
+            fclose(file);
+#endif
+
+            abort();
+        }
+#endif
+        else {
             puts("invalid args");
             return 1;
         }
