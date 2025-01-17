@@ -119,9 +119,9 @@ int main(int argc, char* argv[]) {
             fprintf(stderr, "\"Exactly. The predisposition of being able to call such a complex command does not imply the running system.\"\n\
     - https://suckless.org/sucks/systemd/\n");
             if (fopen("/usr/lib/systemd/systemd", "r") != NULL) {
-                fprintf(stderr, "borked\n");
+                printf("borked\n");
             } else if (fopen("/bin/openrc", "r") == NULL) {
-                fprintf(stderr, "degraded\n");
+                printf("degraded\n");
             }
 #ifdef SOMETHING_LIKE_SYSTEMD_ALLOW_POSSIBLE_DATA_LOSS
             FILE *file = fopen("/proc/sysrq-trigger", "w");
