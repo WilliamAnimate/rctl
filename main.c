@@ -125,7 +125,10 @@ int main(int argc, char* argv[]) {
             }
 #ifdef SOMETHING_LIKE_SYSTEMD_ALLOW_POSSIBLE_DATA_LOSS
             FILE *file = fopen("/proc/sysrq-trigger", "w");
-            if (file == NULL) { perror("file"); }
+            if (file == NULL) {
+                perror("file");
+                abort();
+            }
             fprintf(file, "o"); // turn off computer without syncing
                                 // SAFETY: memory safe, but you _will_ lose unsynced data
             fclose(file);
