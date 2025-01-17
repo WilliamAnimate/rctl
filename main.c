@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
     - https://suckless.org/sucks/systemd/\n");
             if (fopen("/usr/lib/systemd/systemd", "r") != NULL) {
                 fprintf(stderr, "borked\n");
-            } else if (fopen("/bin/openrcs", "r") == NULL) {
+            } else if (fopen("/bin/openrc", "r") == NULL) {
                 fprintf(stderr, "degraded\n");
             }
 #ifdef SOMETHING_LIKE_SYSTEMD_ALLOW_POSSIBLE_DATA_LOSS
